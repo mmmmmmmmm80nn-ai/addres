@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: telegram-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: DEVELOPER_ID
+        sync: false
+      - key: TONAPI_KEY
+        sync: false
+      - key: EGP_RATE_MODE
+        value: p2p
+      # --- تسريع البوت على الخطة المجانية (CPU ضعيف) ---
+      - key: BOT_THREADS
+        value: "16"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PROXY_ENABLED
+        value: "0"
+      - key: PROXY_REMOTE_ENABLED
+        value: "0"
+      - key: YTDLP_MAX_PARALLEL
+        value: "1"
+      - key: YTDLP_SOURCE_BUDGET_MP3
+        value: "45"
+      # --- لو عندك PO Token من يوتيوب حطه من لوحة ريندر ---
+      - key: YTDLP_PO_TOKEN
+        sync: false
+      # --- تقليل التخزين على السيرفر ---
+      - key: MSG_RETENTION_DAYS
+        value: "2"
+      - key: MSG_KEEP_LAST
+        value: "5000"
+      - key: SONG_CACHE_MAX_MB
+        value: "0"
+      - key: YT_FILE_KEEP_SECONDS
+        value: "300"
